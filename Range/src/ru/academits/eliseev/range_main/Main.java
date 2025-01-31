@@ -1,5 +1,6 @@
 package ru.academits.eliseev.range_main;
 
+import java.util.Arrays;
 import java.util.Scanner;
 import ru.academits.eliseev.range.Range;
 
@@ -33,5 +34,26 @@ public class Main {
         } else {
             System.out.println("Число находится вне диапазона.");
         }
+
+        // Range*
+
+        System.out.print("Введите начальное число первого диапазона: ");
+        double from1 = scanner.nextDouble();
+
+        System.out.print("Введите конечное число второго диапазона: ");
+        double to1 = scanner.nextDouble();
+
+        System.out.print("Введите начальное число второго диапазона: ");
+        double from2 = scanner.nextDouble();
+
+        System.out.print("Введите конечное число второго диапазона: ");
+        double to2 = scanner.nextDouble();
+
+        Range range1 = new Range(from1, to1);
+        Range range2 = new Range(from2, to2);
+
+        System.out.println("Пересечение: " + range1.getIntersection(range2));
+        System.out.println("Объединение: " + Arrays.toString((range1.getUnion(range2))));
+        System.out.println("Разность: " + Arrays.toString(range1.getDifference(range2)));
     }
 }
