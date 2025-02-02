@@ -52,7 +52,14 @@ public class Main {
         Range range1 = new Range(from1, to1);
         Range range2 = new Range(from2, to2);
 
-        System.out.println("Пересечение: " + range1.getIntersection(range2));
+        Range intersection = range1.getIntersection(range2);
+
+        if (intersection == null) {
+            System.out.println("Нет пересечения.");
+        } else {
+            System.out.println("Пересечение: " + intersection);
+        }
+
         System.out.println("Объединение: " + Arrays.toString((range1.getUnion(range2))));
         System.out.println("Разность: " + Arrays.toString(range1.getDifference(range2)));
     }
