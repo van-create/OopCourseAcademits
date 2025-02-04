@@ -40,7 +40,7 @@ public class Main {
         System.out.print("Введите начальное число первого диапазона: ");
         double from1 = scanner.nextDouble();
 
-        System.out.print("Введите конечное число второго диапазона: ");
+        System.out.print("Введите конечное число первого диапазона: ");
         double to1 = scanner.nextDouble();
 
         System.out.print("Введите начальное число второго диапазона: ");
@@ -60,7 +60,7 @@ public class Main {
             System.out.println("Пересечение: " + intersection);
         }
 
-        System.out.println("Объединение: " + Arrays.toString((range1.getUnion(range2))));
+        System.out.println("Объединение: " + Arrays.toString(range1.getUnion(range2)));
         System.out.println("Разность: " + Arrays.toString(range1.getDifference(range2)));
     }
 }

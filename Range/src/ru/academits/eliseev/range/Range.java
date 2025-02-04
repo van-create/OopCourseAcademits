@@ -33,9 +33,9 @@ public class Range {
         return number >= from && number <= to;
     }
 
-    public Range getIntersection(Range otherInterval) {
-        double maxFrom = Math.max(this.from, otherInterval.from);
-        double minTo = Math.min(this.to, otherInterval.to);
+    public Range getIntersection(Range range) {
+        double maxFrom = Math.max(from, range.from);
+        double minTo = Math.min(to, range.to);
 
         if (maxFrom >= minTo) {
             return null;
@@ -44,37 +44,38 @@ public class Range {
         return new Range(maxFrom, minTo);
     }
 
-    public Range[] getUnion(Range otherInterval) {
-        if (this.to < otherInterval.from || otherInterval.to < this.from) {
-            return new Range[]{new Range(this.from, this.to), new Range(otherInterval.from, otherInterval.to)};
+    public Range[] getUnion(Range range) {
+        if (to < range.from || range.to < from) {
+            return new Range[]{new Range(from, to), new Range(range.from, range.to)};
         }
 
-        double minFrom = Math.min(this.from, otherInterval.from);
-        double maxTo = Math.max(this.to, otherInterval.to);
+        double minFrom = Math.min(from, range.from);
+        double maxTo = Math.max(to, range.to);
 
         return new Range[]{new Range(minFrom, maxTo)};
     }
 
-    public Range[] getDifference(Range otherInterval) {
-        if (otherInterval.to <= this.from || otherInterval.from >= this.to) {
-            return new Range[]{new Range(this.from, this.to)};
+    public Range[] getDifference(Range range) {
+        if (range.to <= from || range.from >= to) {
+            return new Range[]{new Range(from, to)};
         }
 
-        if (otherInterval.from <= this.from && otherInterval.to >= this.to) {
+        if (range.from <= from && range.to >= to) {
             return new Range[]{};
         }
 
-        if (otherInterval.from > this.from && otherInterval.to < this.to) {
-            return new Range[]{new Range(this.from, otherInterval.from), new Range(otherInterval.to, this.to)};
+        if (range.from > from && range.to < to) {
+            return new Range[]{new Range(from, range.from), new Range(range.to, to)};
         }
 
-        if (otherInterval.from <= this.from) {
-            return new Range[]{new Range(otherInterval.to, this.to)};
+        if (range.from <= from) {
+            return new Range[]{new Range(range.to, to)};
         }
 
-        return new Range[]{new Range(this.from, otherInterval.from)};
+        return new Range[]{new Range(from, range.from)};
     }
 
+    @Override
     public String toString() {
         return "[" + from + ", " + to + "]";
     }
