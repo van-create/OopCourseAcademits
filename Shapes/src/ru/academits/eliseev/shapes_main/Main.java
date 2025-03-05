@@ -7,7 +7,7 @@ import java.util.Comparator;
 
 public class Main {
     public static void main(String[] args) {
-        Shapes[] shapesArray = new Shapes[10];
+        Shape[] shapesArray = new Shape[10];
 
         shapesArray[0] = new Circle(5);
         shapesArray[1] = new Triangle(0, 0, 3, 0, 0, 4);
@@ -20,12 +20,24 @@ public class Main {
         shapesArray[8] = new Circle(3.5);
         shapesArray[9] = new Triangle(2, 2, 5, 2, 2, 6);
 
-        Arrays.sort(shapesArray, Comparator.comparingDouble(Shapes::getArea));
+        Arrays.sort(shapesArray, new Comparator<>() {
+            @Override
+            public int compare(Shape s1, Shape s2) {
+                return Double.compare(s1.getArea(), s2.getArea());
+            }
+        });
 
-        System.out.println("Информация о фигуре с максимальной площадью:");
-        System.out.printf(shapesArray[9].toString());
+        System.out.println("Информация о фигуре с максимальной площадью:" + System.lineSeparator() + System.lineSeparator());
+        System.out.println(shapesArray[shapesArray.length - 1]);
 
-        System.out.println("\n\nИнформация о фигуре со второй по величине площадью:");
-        System.out.printf(shapesArray[8].toString());
+        Arrays.sort(shapesArray, new Comparator<>() {
+            @Override
+            public int compare(Shape s1, Shape s2) {
+                return Double.compare(s1.getPerimeter(), s2.getPerimeter());
+            }
+        });
+
+        System.out.println("Информация о фигуре со вторым по величине периметром:");
+        System.out.println(shapesArray[shapesArray.length - 2]);
     }
 }

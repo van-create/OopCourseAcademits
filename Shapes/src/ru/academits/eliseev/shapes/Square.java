@@ -1,10 +1,19 @@
 package ru.academits.eliseev.shapes;
 
-public class Square implements Shapes {
-    private final double sideLength;
+public class Square implements Shape {
     public static final int SIDES_COUNT = 4;
 
+    private double sideLength;
+
     public Square(double sideLength) {
+        this.sideLength = sideLength;
+    }
+
+    public double getSideLength() {
+        return sideLength;
+    }
+
+    public void setSideLength(double sideLength) {
         this.sideLength = sideLength;
     }
 
@@ -30,7 +39,7 @@ public class Square implements Shapes {
 
     @Override
     public String toString() {
-        return "Фигура: Квадрат\nШирина: " + this.getWidth() + "\nДлина: " + this.getHeight() + "\nПлощадь: " + this.getArea() + "\nПериметр: " + this.getPerimeter();
+        return "Длина стороны = " + sideLength;
     }
 
     @Override

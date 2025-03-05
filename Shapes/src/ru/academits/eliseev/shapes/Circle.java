@@ -1,9 +1,17 @@
 package ru.academits.eliseev.shapes;
 
-public class Circle implements Shapes {
-    private final double radius;
+public class Circle implements Shape {
+    private double radius;
 
     public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(double radius) {
         this.radius = radius;
     }
 
@@ -29,7 +37,7 @@ public class Circle implements Shapes {
 
     @Override
     public String toString() {
-        return "Фигура: Круг\nШирина: " + this.getWidth() + "\nДлина: " + this.getHeight() + "\nПлощадь: " + this.getArea() + "\nПериметр: " + this.getPerimeter();
+        return "Радиус = " + radius;
     }
 
     @Override
