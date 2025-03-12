@@ -159,7 +159,7 @@ public class Vector {
         return hash;
     }
 
-    public static Vector add(Vector vector1, Vector vector2) {
+    public static Vector getSum(Vector vector1, Vector vector2) {
         if (vector1 == null) {
             throw new NullPointerException("Объект 1 не может быть null.");
         }
@@ -175,7 +175,7 @@ public class Vector {
         return resultVector;
     }
 
-    public static Vector subtract(Vector vector1, Vector vector2) {
+    public static Vector getDifference(Vector vector1, Vector vector2) {
         if (vector1 == null) {
             throw new NullPointerException("Объект 1 не может быть null.");
         }

@@ -96,12 +96,12 @@ public class Main {
         System.out.println("Тест 12 пройден: " + vector15.equals(vector16) + " " + !vector15.equals(vector17));
 
         // test 13
-        Vector vector18 = Vector.add(new Vector(new double[]{1.0, 2.0}), new Vector(new double[]{3.0, 4.0}));
+        Vector vector18 = Vector.getSum(new Vector(new double[]{1.0, 2.0}), new Vector(new double[]{3.0, 4.0}));
 
         System.out.println("Тест 13 пройден: " + vector18); // Ожидаем {4.0, 6.0}
 
         // test 14
-        Vector vector19 = Vector.subtract(new Vector(new double[]{5.0, 6.0}), new Vector(new double[]{3.0, 4.0}));
+        Vector vector19 = Vector.getDifference(new Vector(new double[]{5.0, 6.0}), new Vector(new double[]{3.0, 4.0}));
 
         System.out.println("Тест 14 пройден: " + vector19); // Ожидаем {2.0, 2.0}
 
