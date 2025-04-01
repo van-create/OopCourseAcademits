@@ -4,6 +4,8 @@ import ru.academits.eliseev.vector.Vector;
 
 public class Main {
     public static void main(String[] args) {
+        System.out.println(new Vector(3));
+
         runTests();
     }
 
@@ -18,15 +20,15 @@ public class Main {
             new Vector(-1);
 
             System.out.println("Тест 2 провален: должен быть выброшен exception");
-        } catch (IllegalArgumentException e) {
-            System.out.println("Тест 2 пройден: " + e.getMessage());
+        } catch (IllegalArgumentException exception) {
+            System.out.println("Тест 2 пройден: " + exception.getMessage());
         }
 
         // test 3
         Vector vector3 = new Vector(2);
 
-        vector3.setElement(0, 1);
-        vector3.setElement(1, 2);
+        vector3.setComponent(0, 1);
+        vector3.setComponent(1, 2);
 
         Vector vector4 = new Vector(vector3);
 
@@ -77,16 +79,14 @@ public class Main {
         Vector vector13 = new Vector(new double[]{3.0, 4.0});
 
         double length = vector13.getLength();
-
         System.out.println("Тест 10 пройден: длина = " + length + (Math.abs(length - 5.0) < 0.0001 ? " (верно)" : " (неверно)"));
 
         // test 11
         Vector vector14 = new Vector(3);
-        vector14.setElement(1, 5.0);
+        vector14.setComponent(1, 5.0);
 
-        double element = vector14.getElement(1);
-
-        System.out.println("Тест 11 пройден: " + vector14 + " элемент = " + element);
+        double component = vector14.getComponent(1);
+        System.out.println("Тест 11 пройден: " + vector14 + " элемент = " + component);
 
         // test 12
         Vector vector15 = new Vector(new double[]{1.0, 2.0});
@@ -109,8 +109,6 @@ public class Main {
         Vector vector20 = new Vector(new double[]{1.0, 2.0, 3.0});
         Vector vector21 = new Vector(new double[]{4.0, 5.0, 6.0});
 
-        double scalar = Vector.getScalarProduct(vector20, vector21);
-
-        System.out.println("Тест 15 пройден: скалярное произведение = " + scalar); // Ожидаем 32.0
+        System.out.println("Тест 15 пройден: скалярное произведение = " + Vector.getScalarProduct(vector20, vector21)); // Ожидаем 32.0
     }
 }
