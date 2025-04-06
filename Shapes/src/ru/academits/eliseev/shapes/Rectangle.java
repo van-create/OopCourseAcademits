@@ -39,7 +39,7 @@ public class Rectangle implements Shape {
 
     @Override
     public String toString() {
-        return String.format("Фигура: Прямоугольник; Длина = %.2f; Ширина = %.2f", height, width);
+        return String.format("Фигура: Прямоугольник; Высота = %.2f; Ширина = %.2f", height, width);
     }
 
     @Override

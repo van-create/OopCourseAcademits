@@ -1,7 +1,7 @@
 package ru.academits.eliseev.shapes_main;
 
-import ru.academits.eliseev.comparators.AreaComparator;
-import ru.academits.eliseev.comparators.PerimeterComparator;
+import ru.academits.eliseev.shapes_comparators.ShapeAreaComparator;
+import ru.academits.eliseev.shapes_comparators.ShapePerimeterComparator;
 import ru.academits.eliseev.shapes.*;
 
 import java.util.Arrays;
@@ -21,12 +21,12 @@ public class Main {
                 new Triangle(2, 2, 5, 2, 2, 6)
         };
 
-        Arrays.sort(shapesArray, new AreaComparator());
+        Arrays.sort(shapesArray, new ShapeAreaComparator());
 
         System.out.println("Информация о фигуре с максимальной площадью:" + System.lineSeparator() + System.lineSeparator());
         System.out.println(shapesArray[shapesArray.length - 1]);
 
-        Arrays.sort(shapesArray, new PerimeterComparator());
+        Arrays.sort(shapesArray, new ShapePerimeterComparator());
 
         System.out.println("Информация о фигуре со вторым по величине периметром:");
         System.out.println(shapesArray[shapesArray.length - 2]);
