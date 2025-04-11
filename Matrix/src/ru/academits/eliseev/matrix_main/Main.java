@@ -21,20 +21,20 @@ public class Main {
         System.out.println(matrix);
 
         // Проверка получения размеров матрицы
-        System.out.println("Размеры матрицы: " + matrix.getDimensions());
+        System.out.println("Размеры матрицы: " + matrix.getRowsCount() + "x" + matrix.getColumnsCount());
 
         // Проверка вставки вектора
         Vector newRowVector = new Vector(3);
-        matrix.setRowVector(0, newRowVector);
+        matrix.setRow(0, newRowVector);
         System.out.println("Измененная матрица:");
         System.out.println(matrix);
 
         // Проверка получения строки
-        Vector rowVector = matrix.getRowVector(1);
+        Vector rowVector = matrix.getRow(1);
         System.out.println("Вторая строка матрицы: " + rowVector);
 
         // Проверка получения столбца
-        Vector columnVector = matrix.getColumnVector(2);
+        Vector columnVector = matrix.getColumn(2);
         System.out.println("Третий столбец матрицы: " + columnVector);
 
         // Проверка транспонирования матрицы
@@ -78,10 +78,26 @@ public class Main {
 
         // Проверка умножения матрицы на вектор
         Vector vector = new Vector(new double[]{1, 1, 1});
-        matrix.multiplyByVector(vector);
-        System.out.println("Матрица после умножения на вектор {1, 1, 1}:");
-        System.out.println(matrix);
+        System.out.println("Результат умножения на вектор: " + matrix.multiplyByVector(vector));
 
+        // Сравнение матриц
+        Matrix testMatrix1 = new Matrix(array2);
+        Matrix testMatrix2 = new Matrix(array2);
+        System.out.println(testMatrix1.equals(testMatrix2)); // false
+
+        // Хэш-код
+        System.out.println(testMatrix1.hashCode());
+
+        // Проверка
+        double[][] array3 = {
+                {9, 8, 7, 0},
+                {6, 5, 4},
+                {3, 2, 1},
+                {0}
+        };
+
+        Vector[] vectors = {new Vector(array3[0]), new Vector(array3[1]), new Vector(array3[2]), new Vector(array3[3])};
+
+        System.out.println(new Matrix(vectors));
     }
 }
-
