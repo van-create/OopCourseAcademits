@@ -11,9 +11,9 @@ public class ArrayListHome {
         String newLine = System.lineSeparator();
 
         // Пункт 1
-        ArrayList<String> lines = new ArrayList<>();
-        readNumbersFromFile("ArrayListHome/src/ru/academits/eliseev/cache/task1.txt", lines);
-        System.out.println("Задание 1" + newLine + "Список со строками из файла: " + lines);
+        ArrayList<String> fileLines = new ArrayList<>();
+        readNumbersFromFile("ArrayListHome/src/ru/academits/eliseev/cache/task1.txt", fileLines);
+        System.out.println("Задание 1" + newLine + "Список со строками из файла: " + fileLines);
 
         // Пункт 2
         ArrayList<Integer> numbers = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11));
