@@ -2,43 +2,31 @@ package ru.academits.eliseev.list;
 
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.StringJoiner;
 
-public class SinglyLinkedList<T> {
-    private ListItem<T> head;
+public class SinglyLinkedList<E> {
+    // TODO: null элементы поддерживаются
+    // TODO: вспомогательный метод для прохода до индекса
+    private ListItem<E> head;
     private int count;
 
-    public SinglyLinkedList() {
-        head = null;
-        count = 0;
-    }
+    public SinglyLinkedList() {}
 
-    public SinglyLinkedList(T component) {
-        if (component == null) {
-            throw new NullPointerException("Компонент не может быть null");
-        }
-
-        head = new ListItem<>(component);
-        count = 1;
-    }
-
-    public SinglyLinkedList(T[] components) {
-        if (components == null) {
+    public SinglyLinkedList(E[] elements) {
+        if (elements == null) {
             throw new NullPointerException("Массив не может быть null");
         }
 
-        for (T component : components) {
-            if (component == null) {
-                throw new NullPointerException("Массив не может содержать null элементы");
-            }
+        count = elements.length;
+
+        if (count != 0) {
+            head = new ListItem<>(elements[0]);
         }
 
-        count = components.length;
-
-        head = new ListItem<>(count == 0 ? null : components[0]);
-        ListItem<T> currentItem = head;
+        ListItem<E> currentItem = head;
 
         for (int i = 1; i < count; i++) {
-            currentItem.setNext(new ListItem<>(components[i]));
+            currentItem.setNext(new ListItem<>(elements[i]));
             currentItem = currentItem.getNext();
         }
     }
@@ -47,7 +35,7 @@ public class SinglyLinkedList<T> {
         return count;
     }
 
-    public T getFirst() {
+    public E getFirst() {
         if (head == null) {
             throw new NoSuchElementException("Список пуст");
         }
@@ -55,16 +43,10 @@ public class SinglyLinkedList<T> {
         return head.getData();
     }
 
-    public T get(int index) {
-        if (head == null) {
-            throw new NoSuchElementException("Список пуст");
-        }
+    public E get(int index) {
+        checkIndex(index);
 
-        if (index < 0 || index > count) {
-            throw new IndexOutOfBoundsException("Индекс вне диапазона");
-        }
-
-        ListItem<T> currentComponent = head;
+        ListItem<E> currentComponent = head;
 
         for (int currentIndex = 0; currentIndex != index; currentIndex++) {
             currentComponent = currentComponent.getNext();
@@ -73,34 +55,28 @@ public class SinglyLinkedList<T> {
         return currentComponent.getData();
     }
 
-    public T set(int index, T component) {
-        if (head == null) {
-            throw new NoSuchElementException("Список пуст");
-        }
+    public E set(int index, E element) {
+        checkIndex(index);
 
-        if (index < 0 || index > count) {
-            throw new IndexOutOfBoundsException("Индекс вне диапазона");
-        }
-
-        ListItem<T> currentComponent = head;
+        ListItem<E> currentComponent = head;
 
         for (int currentIndex = 0; currentIndex != index; currentIndex++) {
             currentComponent = currentComponent.getNext();
         }
 
-        T oldData = currentComponent.getData();
+        E oldData = currentComponent.getData();
 
-        currentComponent.setData(component);
+        currentComponent.setData(element);
 
         return oldData;
     }
 
-    public T removeFirst() {
+    public E removeFirst() {
         if (head == null) {
             throw new NoSuchElementException("Список пуст");
         }
 
-        T removedData = head.getData();
+        E removedData = head.getData();
 
         head = head.getNext();
         count--;
@@ -108,22 +84,20 @@ public class SinglyLinkedList<T> {
         return removedData;
     }
 
-    public T remove(int index) {
-        if (head == null) {
-            throw new NoSuchElementException("Список пуст");
+    public E remove(int index) {
+        checkIndex(index);
+
+        if (index == 0) {
+            return removeFirst();
         }
 
-        if (index < 0 || index > count) {
-            throw new IndexOutOfBoundsException("Индекс вне диапазона");
-        }
-
-        ListItem<T> currentItem = head;
+        ListItem<E> currentItem = head;
 
         for (int currentIndex = 0; currentIndex != index - 1; currentIndex++) {
             currentItem = currentItem.getNext();
         }
 
-        T removedData = currentItem.getNext().getData();
+        E removedData = currentItem.getNext().getData();
 
         currentItem.setNext(currentItem.getNext().getNext());
         count--;
@@ -131,19 +105,20 @@ public class SinglyLinkedList<T> {
         return removedData;
     }
 
-    public boolean remove(T component) {
+    public boolean remove(E element) {
         if (head == null) {
-            throw new NoSuchElementException("Список пуст");
+            return false;
         }
 
-        for (ListItem<T> currentItem = head, previousItem = null;
+        for (ListItem<E> currentItem = head, previousItem = null;
              currentItem != null;
              previousItem = currentItem, currentItem = currentItem.getNext()) {
-            if (currentItem.getData() == component) {
+            if (Objects.equals(element, currentItem.getData())) {
                 if (previousItem != null) {
                     previousItem.setNext(currentItem.getNext());
                 } else {
                     removeFirst();
+                    return true;
                 }
 
                 count--;
@@ -155,18 +130,18 @@ public class SinglyLinkedList<T> {
         return false;
     }
 
-    public void addFirst(T component) {
-        head = new ListItem<>(component, head);
+    public void addFirst(E element) {
+        head = new ListItem<>(element, head);
         count++;
     }
 
-    public void add(T component) {
-        ListItem<T> newItem = new ListItem<>(component);
+    public void add(E element) {
+        ListItem<E> newItem = new ListItem<>(element);
 
         if (head == null) {
             head = newItem;
         } else {
-            ListItem<T> currentItem = head;
+            ListItem<E> currentItem = head;
 
             while (currentItem.getNext() != null) {
                 currentItem = currentItem.getNext();
@@ -178,27 +153,30 @@ public class SinglyLinkedList<T> {
         count++;
     }
 
-    public void add(int index, T component) {
-        if (index < 0 || index > count + 1) {
-            throw new IndexOutOfBoundsException("Индекс вне диапазона");
+    public void add(int index, E element) {
+        if (index == count) {
+            add(element);
+            return;
         }
 
-        ListItem<T> currentItem = head;
+        checkIndex(index);
+
+        ListItem<E> currentItem = head;
 
         for (int currentIndex = 0; currentIndex != index - 1; currentIndex++) {
             currentItem = currentItem.getNext();
         }
 
-        currentItem.setNext(new ListItem<>(component, currentItem.getNext()));
+        currentItem.setNext(new ListItem<>(element, currentItem.getNext()));
         count++;
     }
 
     public void reverse() {
-        ListItem<T> previousItem = null;
-        ListItem<T> currentItem = head;
+        ListItem<E> previousItem = null;
+        ListItem<E> currentItem = head;
 
         while (currentItem != null) {
-            ListItem<T> nextItem = currentItem.getNext();
+            ListItem<E> nextItem = currentItem.getNext();
             currentItem.setNext(previousItem);
 
             previousItem = currentItem;
@@ -208,10 +186,11 @@ public class SinglyLinkedList<T> {
         head = previousItem;
     }
 
-    public SinglyLinkedList<T> copy() {
-        SinglyLinkedList<T> copiedList = new SinglyLinkedList<>();
+    public SinglyLinkedList<E> copy() {
+        // TODO: реализовать за O(n)
+        SinglyLinkedList<E> copiedList = new SinglyLinkedList<>();
 
-        for (ListItem<T> currentItem = head; currentItem != null; currentItem = currentItem.getNext()) {
+        for (ListItem<E> currentItem = head; currentItem != null; currentItem = currentItem.getNext()) {
             copiedList.add(currentItem.getData());
         }
 
@@ -230,11 +209,11 @@ public class SinglyLinkedList<T> {
 
         SinglyLinkedList<?> linkedList = (SinglyLinkedList<?>) object;
 
-        if (this.count != linkedList.count) {
+        if (count != linkedList.count) {
             return false;
         }
 
-        ListItem<T> currentItem = this.head;
+        ListItem<E> currentItem = head;
         ListItem<?> otherItem = linkedList.head;
 
         while (currentItem != null && otherItem != null) {
@@ -254,7 +233,7 @@ public class SinglyLinkedList<T> {
         final int prime = 37;
         int hash = 1;
 
-        ListItem<T> currentItem = head;
+        ListItem<E> currentItem = head;
 
         while (currentItem != null) {
             hash = prime * hash + currentItem.getData().hashCode();
@@ -266,23 +245,21 @@ public class SinglyLinkedList<T> {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("[");
+        StringJoiner sj = new StringJoiner(", ", "[", "]");
 
-        ListItem<T> currentItem = head;
+        ListItem<E> currentItem = head;
 
         while (currentItem != null) {
-            sb.append(currentItem.getData());
-
-            if (currentItem.getNext() != null) {
-                sb.append(", ");
-            }
-
+            sj.add(String.valueOf(currentItem.getData()));
             currentItem = currentItem.getNext();
         }
 
-        sb.append("]");
+        return sj.toString();
+    }
 
-        return sb.toString();
+    private void checkIndex(int index) {
+        if (index < 0 || index >= count) {
+            throw new IndexOutOfBoundsException("Индекс вне диапазона. Допускается от 0 до " + (count - 1) + ".");
+        }
     }
 }
