@@ -1,9 +1,7 @@
 package ru.academits.eliseev.array_list_main;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.ConcurrentModificationException;
+import java.util.*;
+
 import ru.academits.eliseev.array_list.ArrayList;
 
 public class Main {
@@ -91,7 +89,7 @@ public class Main {
         // Ожидаемый результат: [10, 30, 40, 50, 10, 40, 50]
 
         // Тест 15: Проверка метода containsAll(Collection<?> collection)
-        System.out.println("Тест 15: Проверка наличия коллекции [40, 50] = " + list.containsAll(toAdd));
+        System.out.println("Тест 15: Проверка наличия коллекции [40, 50] = " + new HashSet<>(list).containsAll(toAdd)); // Преобразовал в сет во избежание варнинга
         // Ожидаемый результат: true
 
         // Тест 16: Проверка метода removeAll(Collection<?> collection)
@@ -108,6 +106,7 @@ public class Main {
 
         // Тест 18: Проверка метода clear()
         list.clear();
+        //noinspection ConstantValue
         System.out.println("Тест 18: Очистка списка, size = " + list.size() + ", isEmpty = " + list.isEmpty());
         // Ожидаемый результат: size = 0, isEmpty = true
 

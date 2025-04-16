@@ -8,6 +8,7 @@ public class ArrayList<E> implements List<E> {
     private int modCount = 0;
 
     public ArrayList(){
+        //noinspection unchecked
         items = (E[]) new Object[10];
         size = 0;
     }
@@ -17,6 +18,7 @@ public class ArrayList<E> implements List<E> {
             throw new IllegalArgumentException("Некорректное значение размерности массива: " + initialCapacity);
         }
 
+        //noinspection unchecked
         items = (E[]) new Object[initialCapacity];
         size = 0;
     }
@@ -27,6 +29,7 @@ public class ArrayList<E> implements List<E> {
         }
 
         size = collection.size();
+        //noinspection unchecked
         items = (E[]) collection.toArray();
     }
 
@@ -91,9 +94,11 @@ public class ArrayList<E> implements List<E> {
     @Override
     public <T> T[] toArray(T[] array) {
         if (array.length < size) {
+            //noinspection unchecked
             return (T[]) Arrays.copyOf(items, size, array.getClass());
         }
 
+        //noinspection SuspiciousSystemArraycopy
         System.arraycopy(items, 0, array, 0, size);
 
         if (array.length > size) {
@@ -150,7 +155,7 @@ public class ArrayList<E> implements List<E> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> collection) {
+    public boolean addAll(@SuppressWarnings("DataFlowIssue") Collection<? extends E> collection) {
         if (collection == null) {
             throw new NullPointerException("Коллекция не может быть null");
         }
@@ -349,11 +354,13 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public ListIterator<E> listIterator() {
+        //noinspection DataFlowIssue
         return null;
     }
 
     @Override
     public ListIterator<E> listIterator(int index) {
+        //noinspection DataFlowIssue
         return null;
     }
 
