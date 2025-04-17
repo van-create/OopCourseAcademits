@@ -176,7 +176,7 @@ public class ArrayList<E> implements List<E> {
     @Override
     public boolean addAll(int index, Collection<? extends E> collection) {
         if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException("Индекс вне диапазона: " + index);
+            throw new IndexOutOfBoundsException("Индекс вне диапазона. Допустимый диапазон от 0 до " + size + ". Полученный индекс: " + index);
         }
 
         if (collection == null) {
@@ -260,7 +260,7 @@ public class ArrayList<E> implements List<E> {
     @Override
     public E get(int index) {
         if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Индекс вне диапазона: " + index);
+            throw new IndexOutOfBoundsException("Индекс вне диапазона. Допустимый диапазон от 0 до " + (size - 1) + ". Полученный индекс: " + index);
         }
 
         return items[index];
@@ -269,7 +269,7 @@ public class ArrayList<E> implements List<E> {
     @Override
     public E set(int index, E element) {
         if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Индекс вне диапазона: " + index);
+            throw new IndexOutOfBoundsException("Индекс вне диапазона. Допустимый диапазон от 0 до " + (size - 1) + ". Полученный индекс: " + index);
         }
 
         E previousElement = items[index];
@@ -282,7 +282,7 @@ public class ArrayList<E> implements List<E> {
     @Override
     public void add(int index, E element) {
         if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException("Индекс вне диапазона: " + index);
+            throw new IndexOutOfBoundsException("Индекс вне диапазона. Допустимый диапазон от 0 до " + size + ". Полученный индекс: " + index);
         }
 
         if (index == size) {
@@ -305,7 +305,7 @@ public class ArrayList<E> implements List<E> {
     @Override
     public E remove(int index) {
         if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Индекс вне диапазона: " + index);
+            throw new IndexOutOfBoundsException("Индекс вне диапазона. Допустимый диапазон от 0 до " + (size - 1) + ". Полученный индекс: " + index);
         }
 
         E removedElement = items[index];
