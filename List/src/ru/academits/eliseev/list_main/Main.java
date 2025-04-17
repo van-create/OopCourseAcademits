@@ -27,8 +27,8 @@ public class Main {
             System.out.println("Тест 1 пройден: Корректно выбрасывает исключение для getFirst на пустом списке");
         }
 
-        // Тест 3
-        System.out.println(newLine + "Тест 3: Конструктор из массива и получение");
+        // Тест 2
+        System.out.println(newLine + "Тест 2: Конструктор из массива и получение");
 
         Integer[] numbers = {1, 2, 3, 4, 5};
         SinglyLinkedList<Integer> list3 = new SinglyLinkedList<>(numbers);
@@ -37,8 +37,8 @@ public class Main {
         System.out.println("Элемент по индексу 2: " + list3.get(2)); // 3
         System.out.println("В виде строки: " + list3); // [1, 2, 3, 4, 5]
 
-        // Тест 4
-        System.out.println(newLine + "Тест 4: Операции добавления");
+        // Тест 3
+        System.out.println(newLine + "Тест 3: Операции добавления");
 
         SinglyLinkedList<Character> list4 = new SinglyLinkedList<>();
         list4.add('А');
@@ -48,8 +48,8 @@ public class Main {
         System.out.println("Длина: " + list4.getLength()); // 3
         System.out.println("В виде строки: " + list4); // [Б, В, А]
 
-        // Тест 5
-        System.out.println(newLine + "Тест 5: Операции удаления");
+        // Тест 4
+        System.out.println(newLine + "Тест 4: Операции удаления");
 
         SinglyLinkedList<Integer> list5 = new SinglyLinkedList<>(new Integer[]{1, 2, 3, 4});
 
@@ -64,8 +64,8 @@ public class Main {
 
         System.out.println("В виде строки: " + list5); // [4]
 
-        // Тест 6
-        System.out.println(newLine + "Тест 6: Операция замены");
+        // Тест 5
+        System.out.println(newLine + "Тест 5: Операция замены");
 
         SinglyLinkedList<String> list6 = new SinglyLinkedList<>(new String[]{"а", "б", "в"});
         String oldValue = list6.set(1, "г");
@@ -73,16 +73,16 @@ public class Main {
         System.out.println("Старое значение: " + oldValue); // б
         System.out.println("В виде строки: " + list6); // [а, г, в]
 
-        // Тест 7
-        System.out.println(newLine + "Тест 7: Операция разворота");
+        // Тест 6
+        System.out.println(newLine + "Тест 6: Операция разворота");
 
         SinglyLinkedList<Integer> list7 = new SinglyLinkedList<>(new Integer[]{1, 2, 3});
         list7.reverse();
 
         System.out.println("В виде строки: " + list7); // [3, 2, 1]
 
-        // Тест 8
-        System.out.println(newLine + "Тест 8: Операция копирования");
+        // Тест 7
+        System.out.println(newLine + "Тест 7: Операция копирования");
 
         SinglyLinkedList<Integer> list8 = new SinglyLinkedList<>(new Integer[]{1, 2, 3});
         SinglyLinkedList<Integer> copy = list8.copy();
@@ -91,22 +91,15 @@ public class Main {
         System.out.println("Копия: " + copy);
         System.out.println("Равны: " + list8.equals(copy)); // true
 
-        // Тест 9
-        System.out.println(newLine + "Тест 9: Обработка исключений");
-
-        try {
-            new SinglyLinkedList<>(new String[]{"а", null, "в"});
-            System.out.println("Тест 9.1 провален: Должно выбросить NullPointerException");
-        } catch (NullPointerException e) {
-            System.out.println("Тест 9.1 пройден: Корректно выбрасывает NullPointerException для null элементов");
-        }
+        // Тест 8
+        System.out.println(newLine + "Тест 8: Обработка исключений");
 
         try {
             SinglyLinkedList<Integer> list10 = new SinglyLinkedList<>(new Integer[]{1, 2, 3});
             list10.get(5);
-            System.out.println("Тест 9.2 провален: Должно выбросить IndexOutOfBoundsException");
+            System.out.println("Тест 8.1 провален: Должно выбросить IndexOutOfBoundsException");
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Тест 9.2 пройден: Корректно выбрасывает IndexOutOfBoundsException для неверного индекса");
+            System.out.println("Тест 8.1 пройден: Корректно выбрасывает IndexOutOfBoundsException для неверного индекса");
         }
     }
 }

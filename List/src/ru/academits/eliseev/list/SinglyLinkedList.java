@@ -5,8 +5,6 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 public class SinglyLinkedList<E> {
-    // TODO: null элементы поддерживаются
-    // TODO: вспомогательный метод для прохода до индекса
     private ListItem<E> head;
     private int count;
 
@@ -46,27 +44,17 @@ public class SinglyLinkedList<E> {
     public E get(int index) {
         checkIndex(index);
 
-        ListItem<E> currentComponent = head;
-
-        for (int currentIndex = 0; currentIndex != index; currentIndex++) {
-            currentComponent = currentComponent.getNext();
-        }
-
-        return currentComponent.getData();
+        return getItem(index).getData();
     }
 
     public E set(int index, E element) {
         checkIndex(index);
 
-        ListItem<E> currentComponent = head;
+        ListItem<E> currentItem = getItem(index);
 
-        for (int currentIndex = 0; currentIndex != index; currentIndex++) {
-            currentComponent = currentComponent.getNext();
-        }
+        E oldData = currentItem.getData();
 
-        E oldData = currentComponent.getData();
-
-        currentComponent.setData(element);
+        currentItem.setData(element);
 
         return oldData;
     }
@@ -91,11 +79,7 @@ public class SinglyLinkedList<E> {
             return removeFirst();
         }
 
-        ListItem<E> currentItem = head;
-
-        for (int currentIndex = 0; currentIndex != index - 1; currentIndex++) {
-            currentItem = currentItem.getNext();
-        }
+        ListItem<E> currentItem = getItem(index - 1);
 
         E removedData = currentItem.getNext().getData();
 
@@ -141,11 +125,7 @@ public class SinglyLinkedList<E> {
         if (head == null) {
             head = newItem;
         } else {
-            ListItem<E> currentItem = head;
-
-            while (currentItem.getNext() != null) {
-                currentItem = currentItem.getNext();
-            }
+            ListItem<E> currentItem = getItem(count - 1);
 
             currentItem.setNext(newItem);
         }
@@ -161,11 +141,7 @@ public class SinglyLinkedList<E> {
 
         checkIndex(index);
 
-        ListItem<E> currentItem = head;
-
-        for (int currentIndex = 0; currentIndex != index - 1; currentIndex++) {
-            currentItem = currentItem.getNext();
-        }
+        ListItem<E> currentItem = getItem(index - 1);
 
         currentItem.setNext(new ListItem<>(element, currentItem.getNext()));
         count++;
@@ -187,12 +163,28 @@ public class SinglyLinkedList<E> {
     }
 
     public SinglyLinkedList<E> copy() {
-        // TODO: реализовать за O(n)
         SinglyLinkedList<E> copiedList = new SinglyLinkedList<>();
 
-        for (ListItem<E> currentItem = head; currentItem != null; currentItem = currentItem.getNext()) {
-            copiedList.add(currentItem.getData());
+        if (head == null) {
+            return copiedList;
         }
+
+        ListItem<E> copiedHead = new ListItem<>(head.getData());
+        copiedList.head = copiedHead;
+
+        ListItem<E> currentItem = head.getNext();
+        ListItem<E> copiedCurrentItem = copiedHead;
+
+        while (currentItem != null) {
+            ListItem<E> copiedItem = new ListItem<>(currentItem.getData());
+
+            copiedCurrentItem.setNext(copiedItem);
+            copiedCurrentItem = copiedItem;
+
+            currentItem = currentItem.getNext();
+        }
+
+        copiedList.count = count;
 
         return copiedList;
     }
@@ -245,21 +237,33 @@ public class SinglyLinkedList<E> {
 
     @Override
     public String toString() {
-        StringJoiner sj = new StringJoiner(", ", "[", "]");
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
 
         ListItem<E> currentItem = head;
 
         while (currentItem != null) {
-            sj.add(String.valueOf(currentItem.getData()));
+            joiner.add(String.valueOf(currentItem.getData()));
             currentItem = currentItem.getNext();
         }
 
-        return sj.toString();
+        return joiner.toString();
     }
 
     private void checkIndex(int index) {
         if (index < 0 || index >= count) {
             throw new IndexOutOfBoundsException("Индекс вне диапазона. Допускается от 0 до " + (count - 1) + ".");
         }
+    }
+
+    private ListItem<E> getItem(int index) {
+        checkIndex(index);
+
+        ListItem<E> currentItem = head;
+
+        for (int i = 0; i < index; i++) {
+            currentItem = currentItem.getNext();
+        }
+
+        return currentItem;
     }
 }
