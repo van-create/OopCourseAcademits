@@ -62,10 +62,12 @@ public class ArrayList<E> implements List<E> {
         private int currentIndex = -1;
         private final int expectedModCount = modCount;
 
+        @Override
         public boolean hasNext() {
             return currentIndex < size - 1;
         }
 
+        @Override
         public E next() {
             if (!hasNext()) {
                 throw new NoSuchElementException("Элемент не найден");
