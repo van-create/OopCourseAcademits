@@ -45,7 +45,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public boolean contains(Object object) {
-        if (size == 0) {
+        if (isEmpty()) {
             return false;
         }
 
@@ -128,7 +128,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public boolean remove(Object object) {
-        if (size == 0) {
+        if (isEmpty()) {
             return false;
         }
 
@@ -216,6 +216,10 @@ public class ArrayList<E> implements List<E> {
             return false;
         }
 
+        if (isEmpty()) {
+            return false;
+        }
+
         boolean isRemoved = false;
 
         for (Object item : collection) {
@@ -233,11 +237,11 @@ public class ArrayList<E> implements List<E> {
             throw new NullPointerException("Коллекция не может быть null");
         }
 
-        if (collection.isEmpty()) {
-            if (size == 0) {
-                return false;
-            }
+        if (isEmpty()) {
+            return false;
+        }
 
+        if (collection.isEmpty()) {
             clear();
 
             return true;
