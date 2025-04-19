@@ -94,7 +94,7 @@ public class ArrayList<E> implements List<E> {
     @Override
     public <T> T[] toArray(T[] array) {
         if (!array.getClass().getComponentType().isAssignableFrom(items.getClass().getComponentType())) {
-            throw new ArrayStoreException("Невозможно преобразовать массив в массив заданного типа");
+            throw new ArrayStoreException("Невозможно преобразовать список в массив заданного типа");
         }
 
         if (array.length < size) {
