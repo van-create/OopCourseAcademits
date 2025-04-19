@@ -234,7 +234,13 @@ public class ArrayList<E> implements List<E> {
         }
 
         if (collection.isEmpty()) {
-            return false;
+            if (size == 0) {
+                return false;
+            }
+
+            clear();
+
+            return true;
         }
 
         boolean isModified = false;
