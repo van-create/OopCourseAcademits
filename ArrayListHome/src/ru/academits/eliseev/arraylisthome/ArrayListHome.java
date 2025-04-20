@@ -13,7 +13,7 @@ public class ArrayListHome {
 
         // Пункт 1
         try {
-            ArrayList<String> fileLines = readFile("ArrayListHome/src/ru/academits/eliseev/cache/task1.txt");
+            ArrayList<String> fileLines = getFileLines("ArrayListHome/src/ru/academits/eliseev/cache/task1.txt");
             System.out.println("Задание 1" + newLine + "Список со строками из файла: " + fileLines);
         } catch (FileNotFoundException e) {
             System.out.println("Файл не найден: " + e.getMessage());
@@ -32,7 +32,7 @@ public class ArrayListHome {
         System.out.println("Задание 3" + newLine + "Исходный список: " + numbers2 + newLine + "Список с уникальными числами: " + getUniqueNumbersList(numbers2));
     }
 
-    public static ArrayList<String> readFile(String fileName) throws IOException {
+    public static ArrayList<String> getFileLines(String fileName) throws IOException {
         ArrayList<String> lines = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
