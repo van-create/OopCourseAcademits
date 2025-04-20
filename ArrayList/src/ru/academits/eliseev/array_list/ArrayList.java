@@ -1,6 +1,14 @@
 package ru.academits.eliseev.array_list;
 
-import java.util.*;
+import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.ConcurrentModificationException;
+import java.util.Objects;
+import java.util.StringJoiner;
+import java.util.ListIterator;
 
 public class ArrayList<E> implements List<E> {
     private E[] items;
@@ -69,12 +77,12 @@ public class ArrayList<E> implements List<E> {
 
         @Override
         public E next() {
-            if (!hasNext()) {
-                throw new NoSuchElementException("Элемент не найден");
-            }
-
             if (expectedModCount != modCount) {
                 throw new ConcurrentModificationException("Список был изменен");
+            }
+
+            if (!hasNext()) {
+                throw new NoSuchElementException("Элемент не найден");
             }
 
             ++currentIndex;
@@ -95,10 +103,6 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public <T> T[] toArray(T[] array) {
-        if (!array.getClass().getComponentType().isAssignableFrom(items.getClass().getComponentType())) {
-            throw new ArrayStoreException("Невозможно преобразовать список в массив заданного типа");
-        }
-
         if (array.length < size) {
             //noinspection unchecked
             return (T[]) Arrays.copyOf(items, size, array.getClass());
