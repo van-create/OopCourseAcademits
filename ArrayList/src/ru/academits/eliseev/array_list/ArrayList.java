@@ -142,11 +142,11 @@ public class ArrayList<E> implements List<E> {
 
         if (indexOfElement == -1) {
             return false;
-        } else {
-            remove(indexOfElement);
-
-            return true;
         }
+
+        remove(indexOfElement);
+
+        return true;
     }
 
     @Override
