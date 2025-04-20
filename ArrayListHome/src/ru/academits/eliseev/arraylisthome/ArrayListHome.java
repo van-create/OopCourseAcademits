@@ -1,5 +1,6 @@
 package ru.academits.eliseev.arraylisthome;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,22 +12,29 @@ public class ArrayListHome {
         String newLine = System.lineSeparator();
 
         // Пункт 1
-        ArrayList<String> fileLines = new ArrayList<>();
-        readNumbersFromFile("ArrayListHome/src/ru/academits/eliseev/cache/task1.txt", fileLines);
-        System.out.println("Задание 1" + newLine + "Список со строками из файла: " + fileLines);
+        try {
+            ArrayList<String> fileLines = readFile("ArrayListHome/src/ru/academits/eliseev/cache/task1.txt");
+            System.out.println("Задание 1" + newLine + "Список со строками из файла: " + fileLines);
+        } catch (FileNotFoundException e) {
+            System.out.println("Файл не найден: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Ошибка при работе с файлом: " + e.getMessage());
+        }
 
         // Пункт 2
-        ArrayList<Integer> numbers = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11));
-        System.out.println("Задание 2" + newLine + "Исходный список: " + numbers);
-        deleteEvenNumbers(numbers);
-        System.out.println("Cписок с удаленными четными числами: " + numbers);
+        ArrayList<Integer> numbers1 = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11));
+        System.out.println("Задание 2" + newLine + "Исходный список: " + numbers1);
+        deleteEvenNumbers(numbers1);
+        System.out.println("Список с удаленными четными числами: " + numbers1);
 
         // Пункт 3
-        ArrayList<Integer> numbers1 = new ArrayList<>(Arrays.asList(1, 2, 1, 3, 2, 4, 3, 5));
-        System.out.println("Задание 3" + newLine + "Исходный список: " + numbers1 + newLine + "Список с уникальными числами: " + getUniqueNumbersList(numbers1));
+        ArrayList<Integer> numbers2 = new ArrayList<>(Arrays.asList(1, 2, 1, 3, 2, 4, 3, 5));
+        System.out.println("Задание 3" + newLine + "Исходный список: " + numbers2 + newLine + "Список с уникальными числами: " + getUniqueNumbersList(numbers2));
     }
 
-    public static void readNumbersFromFile(String fileName, ArrayList<String> lines) {
+    public static ArrayList<String> readFile(String fileName) throws IOException {
+        ArrayList<String> lines = new ArrayList<>();
+
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line = reader.readLine();
 
@@ -35,25 +43,23 @@ public class ArrayListHome {
 
                 line = reader.readLine();
             }
-        } catch (IOException exception) {
-            System.out.println("Ошибка при работе с файлом: " + exception.getMessage());
         }
+
+        return lines;
     }
 
     public static void deleteEvenNumbers(ArrayList<Integer> list) {
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = list.size() - 1; i >= 0; i--) {
             if (list.get(i) % 2 == 0) {
                 list.remove(i);
-
-                i--;
             }
         }
     }
 
-    public static ArrayList<Integer> getUniqueNumbersList(ArrayList<Integer> list) {
-        ArrayList<Integer> uniqueNumbers = new ArrayList<>(list.size());
+    public static <T> ArrayList<T> getUniqueNumbersList(ArrayList<T> list) {
+        ArrayList<T> uniqueNumbers = new ArrayList<>(list.size());
 
-        for (Integer number : list) {
+        for (T number : list) {
             if (!uniqueNumbers.contains(number)) {
                 uniqueNumbers.add(number);
             }
