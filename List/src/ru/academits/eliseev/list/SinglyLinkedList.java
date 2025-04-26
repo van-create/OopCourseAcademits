@@ -79,11 +79,11 @@ public class SinglyLinkedList<E> {
             return removeFirst();
         }
 
-        ListItem<E> currentItem = getItem(index - 1);
+        ListItem<E> previousItem = getItem(index - 1);
 
-        E removedData = currentItem.getNext().getData();
+        E removedData = previousItem.getNext().getData();
 
-        currentItem.setNext(currentItem.getNext().getNext());
+        previousItem.setNext(previousItem.getNext().getNext());
         count--;
 
         return removedData;
@@ -98,12 +98,12 @@ public class SinglyLinkedList<E> {
              currentItem != null;
              previousItem = currentItem, currentItem = currentItem.getNext()) {
             if (Objects.equals(element, currentItem.getData())) {
-                if (previousItem != null) {
-                    previousItem.setNext(currentItem.getNext());
-                } else {
+                if (previousItem == null) {
                     removeFirst();
                     return true;
                 }
+
+                previousItem.setNext(currentItem.getNext());
 
                 count--;
 
@@ -120,30 +120,22 @@ public class SinglyLinkedList<E> {
     }
 
     public void add(E element) {
-        ListItem<E> newItem = new ListItem<>(element);
-
-        if (head == null) {
-            head = newItem;
-        } else {
-            ListItem<E> currentItem = getItem(count - 1);
-
-            currentItem.setNext(newItem);
-        }
-
-        count++;
+        add(count, element);
     }
 
     public void add(int index, E element) {
-        if (index == count) {
-            add(element);
+        if (index < 0 || index > count) {
+            throw new IndexOutOfBoundsException("Индекс вне диапазона. Допускается от 0 до " + (count) + ".");
+        }
+
+        if (index == 0) {
+            addFirst(element);
             return;
         }
 
-        checkIndex(index);
+        ListItem<E> previousItem = getItem(index - 1);
 
-        ListItem<E> currentItem = getItem(index - 1);
-
-        currentItem.setNext(new ListItem<>(element, currentItem.getNext()));
+        previousItem.setNext(new ListItem<>(element, previousItem.getNext()));
         count++;
     }
 
@@ -228,7 +220,7 @@ public class SinglyLinkedList<E> {
         ListItem<E> currentItem = head;
 
         while (currentItem != null) {
-            hash = prime * hash + currentItem.getData().hashCode();
+            hash = prime * hash + (currentItem.getData() == null ? 0 : currentItem.getData().hashCode());
             currentItem = currentItem.getNext();
         }
 
@@ -251,13 +243,11 @@ public class SinglyLinkedList<E> {
 
     private void checkIndex(int index) {
         if (index < 0 || index >= count) {
-            throw new IndexOutOfBoundsException("Индекс вне диапазона. Допускается от 0 до " + (count - 1) + ".");
+            throw new IndexOutOfBoundsException("Индекс вне диапазона. Допускается от 0 до " + (count - 1) + ". Текущее значение: " + index + ".");
         }
     }
 
     private ListItem<E> getItem(int index) {
-        checkIndex(index);
-
         ListItem<E> currentItem = head;
 
         for (int i = 0; i < index; i++) {
