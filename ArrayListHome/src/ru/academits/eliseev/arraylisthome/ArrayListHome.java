@@ -29,13 +29,13 @@ public class ArrayListHome {
 
         // Пункт 3
         ArrayList<Integer> numbers2 = new ArrayList<>(Arrays.asList(1, 2, 1, 3, 2, 4, 3, 5));
-        System.out.println("Задание 3" + newLine + "Исходный список: " + numbers2 + newLine + "Список с уникальными числами: " + getUniqueNumbersList(numbers2));
+        System.out.println("Задание 3" + newLine + "Исходный список: " + numbers2 + newLine + "Список с уникальными числами: " + getUniqueElementsList(numbers2));
     }
 
     public static ArrayList<String> getFileLines(String fileName) throws IOException {
-        ArrayList<String> lines = new ArrayList<>();
-
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            ArrayList<String> lines = new ArrayList<>();
+
             String line = reader.readLine();
 
             while (line != null) {
@@ -43,9 +43,9 @@ public class ArrayListHome {
 
                 line = reader.readLine();
             }
-        }
 
-        return lines;
+            return lines;
+        }
     }
 
     public static void deleteEvenNumbers(ArrayList<Integer> list) {
@@ -56,7 +56,7 @@ public class ArrayListHome {
         }
     }
 
-    public static <T> ArrayList<T> getUniqueNumbersList(ArrayList<T> list) {
+    public static <T> ArrayList<T> getUniqueElementsList(ArrayList<T> list) {
         ArrayList<T> uniqueNumbers = new ArrayList<>(list.size());
 
         for (T number : list) {
