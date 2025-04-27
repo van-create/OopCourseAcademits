@@ -70,12 +70,12 @@ public class Main {
 
         // Тест 8: Проверка toArray
         Object[] array = table1.toArray();
-        System.out.println("Тест 8: toArray: " + Arrays.toString(array)); // Ожидается: [1, 2, 3, null] (порядок может варьироваться)
+        System.out.println("Тест 8: toArray: " + Arrays.toString(array)); // Ожидается: [1, 2, 3, 4, null] (порядок может варьироваться)
 
         // Тест 9: Проверка toArray(T[])
         Integer[] intArray = new Integer[5];
         table1.toArray(intArray);
-        System.out.println("Тест 9: toArray(T[]): " + Arrays.toString(intArray)); // Ожидается: [1, 2, 3, null, null] (порядок может варьироваться)
+        System.out.println("Тест 9: toArray(T[]): " + Arrays.toString(intArray)); // Ожидается: [1, 2, 3, 4, null] (порядок может варьироваться)
 
         // Тест 10: Проверка remove
         boolean removed = table1.remove(2);
@@ -84,7 +84,7 @@ public class Main {
         System.out.println("Содержит 2 = " + table1.contains(2)); // Ожидается: false
 
         // Тест 11: Проверка конструктора с коллекцией
-        ArrayList<Integer> source = new ArrayList<>(Arrays.asList(10, 20, 30));
+        ArrayList<Integer> source = new ArrayList<>(Arrays.asList(10, 20, 30, 20));
         HashTable<Integer> table2 = new HashTable<>(source);
 
         System.out.println("Тест 11: Конструктор с коллекцией, размер = " + table2.size()); // Ожидается: 3
