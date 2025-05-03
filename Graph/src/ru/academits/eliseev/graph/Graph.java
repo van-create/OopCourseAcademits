@@ -14,7 +14,7 @@ public class Graph {
             {0, 0, 0, 0, 0}
     };
 
-    public static void dfs(int startVertex, boolean[] visited) {
+    public static void depthFisrtSearch(int startVertex, boolean[] visited) {
         Stack<Integer> stack = new Stack<>();
         stack.push(startVertex);
 
@@ -34,7 +34,7 @@ public class Graph {
         }
     }
 
-    public static void bfs(int startVertex, boolean[] visited) {
+    public static void breadthFirstSearch(int startVertex, boolean[] visited) {
         Queue<Integer> queue = new LinkedList<>();
         queue.add(startVertex);
 
@@ -63,7 +63,7 @@ public class Graph {
 
         for (int i = 0; i < vertices; i++) {
             if (!visited[i]) {
-                dfs(i, visited);
+                depthFisrtSearch(i, visited);
             }
         }
 
@@ -72,7 +72,7 @@ public class Graph {
 
         for (int i = 0; i < vertices; i++) {
             if (!visited[i]) {
-                bfs(i, visited);
+                breadthFirstSearch(i, visited);
             }
         }
     }
