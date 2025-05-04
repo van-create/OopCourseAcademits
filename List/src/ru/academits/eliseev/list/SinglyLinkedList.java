@@ -125,7 +125,7 @@ public class SinglyLinkedList<E> {
 
     public void add(int index, E element) {
         if (index < 0 || index > count) {
-            throw new IndexOutOfBoundsException("Индекс вне диапазона. Допускается от 0 до " + (count) + ".");
+            throw new IndexOutOfBoundsException("Индекс вне диапазона. Допускается от 0 до " + count + ". Передано значение: " + index);
         }
 
         if (index == 0) {
@@ -200,7 +200,7 @@ public class SinglyLinkedList<E> {
         ListItem<E> currentItem = head;
         ListItem<?> otherItem = linkedList.head;
 
-        while (currentItem != null && otherItem != null) {
+        while (currentItem != null) {
             if (!Objects.equals(currentItem.getData(), otherItem.getData())) {
                 return false;
             }
@@ -243,7 +243,7 @@ public class SinglyLinkedList<E> {
 
     private void checkIndex(int index) {
         if (index < 0 || index >= count) {
-            throw new IndexOutOfBoundsException("Индекс вне диапазона. Допускается от 0 до " + (count - 1) + ". Текущее значение: " + index + ".");
+            throw new IndexOutOfBoundsException("Индекс вне диапазона. Допускается от 0 до " + (count - 1) + ". Передано значение: " + index + ".");
         }
     }
 
