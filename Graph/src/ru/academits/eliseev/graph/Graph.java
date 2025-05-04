@@ -14,7 +14,7 @@ public class Graph {
             {0, 0, 0, 0, 0}
     };
 
-    public static void depthFisrtSearch(int startVertex, boolean[] visited) {
+    public static void depthFirstSearch(int startVertex, boolean[] visited) {
         Stack<Integer> stack = new Stack<>();
         stack.push(startVertex);
 
@@ -55,22 +55,22 @@ public class Graph {
     }
 
     public static void main(String[] args) {
-        int vertices = graph.length;
-        boolean[] visited = new boolean[graph.length];
+        int verticesCount = graph.length;
+        boolean[] visited = new boolean[verticesCount];
 
         System.out.println("Обход в глубину:");
-        Arrays.fill(visited, false);
 
-        for (int i = 0; i < vertices; i++) {
+        for (int i = 0; i < verticesCount; i++) {
             if (!visited[i]) {
-                depthFisrtSearch(i, visited);
+                depthFirstSearch(i, visited);
             }
         }
 
-        System.out.println(System.lineSeparator() + "Обход в ширину:");
         Arrays.fill(visited, false);
 
-        for (int i = 0; i < vertices; i++) {
+        System.out.println(System.lineSeparator() + "Обход в ширину:");
+
+        for (int i = 0; i < verticesCount; i++) {
             if (!visited[i]) {
                 breadthFirstSearch(i, visited);
             }
