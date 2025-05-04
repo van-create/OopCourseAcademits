@@ -57,14 +57,14 @@ public class ArrayListHome {
     }
 
     public static <T> ArrayList<T> getUniqueElementsList(ArrayList<T> list) {
-        ArrayList<T> uniqueNumbers = new ArrayList<>(list.size());
+        ArrayList<T> uniqueElements = new ArrayList<>(list.size());
 
-        for (T number : list) {
-            if (!uniqueNumbers.contains(number)) {
-                uniqueNumbers.add(number);
+        for (T element : list) {
+            if (!uniqueElements.contains(element)) {
+                uniqueElements.add(element);
             }
         }
 
-        return uniqueNumbers;
+        return uniqueElements;
     }
 }
