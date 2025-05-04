@@ -1,4 +1,4 @@
-package ru.academits.eliseev.lambdas;
+package ru.academits.eliseev.lambdas_task1;
 
 import java.util.ArrayList;
 import java.util.List;
