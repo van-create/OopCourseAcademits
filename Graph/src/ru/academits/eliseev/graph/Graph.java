@@ -13,8 +13,9 @@ public class Graph {
             {0, 0, 1, 0, 0},
             {0, 0, 0, 0, 0}
     };
+    final static int verticesCount = graph.length;
 
-    public static void depthFirstSearch(int startVertex, boolean[] visited) {
+    public static void depthFirstSearchIterative(int startVertex, boolean[] visited) {
         Stack<Integer> stack = new Stack<>();
         stack.push(startVertex);
 
@@ -25,11 +26,22 @@ public class Graph {
                 visited[vertex] = true;
                 System.out.print(vertex + " ");
 
-                for (int i = graph.length - 1; i >= 0; i--) {
+                for (int i = 0; i < verticesCount; i++) {
                     if (graph[vertex][i] == 1 && !visited[i]) {
                         stack.push(i);
                     }
                 }
+            }
+        }
+    }
+
+    public static void depthFirstSearchRecursive(int startVertex, boolean[] visited) {
+        visited[startVertex] = true;
+        System.out.print(startVertex + " ");
+
+        for (int i = verticesCount - 1; i >= 0; i--) {
+            if (graph[startVertex][i] == 1 && !visited[i]) {
+                depthFirstSearchRecursive(i, visited);
             }
         }
     }
@@ -44,7 +56,7 @@ public class Graph {
             int vertex = queue.poll();
             System.out.print(vertex + " ");
 
-            for (int i = 0; i < graph[startVertex].length; i++) {
+            for (int i = 0; i < verticesCount; i++) {
                 if (!visited[i] && graph[startVertex][i] == 1) {
                     visited[i] = true;
                     queue.add(i);
@@ -55,14 +67,23 @@ public class Graph {
     }
 
     public static void main(String[] args) {
-        int verticesCount = graph.length;
         boolean[] visited = new boolean[verticesCount];
 
-        System.out.println("Обход в глубину:");
+        System.out.println("Обход в глубину циклом:");
 
         for (int i = 0; i < verticesCount; i++) {
             if (!visited[i]) {
-                depthFirstSearch(i, visited);
+                depthFirstSearchIterative(i, visited);
+            }
+        }
+
+        Arrays.fill(visited, false);
+
+        System.out.println(System.lineSeparator() + "Обход в глубину рекурсией:");
+
+        for (int i = 0; i < verticesCount; i++) {
+            if (!visited[i]) {
+                depthFirstSearchRecursive(i, visited);
             }
         }
 
