@@ -1,14 +1,6 @@
 package ru.academits.eliseev.array_list;
 
-import java.util.List;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.ConcurrentModificationException;
-import java.util.Objects;
-import java.util.StringJoiner;
-import java.util.ListIterator;
+import java.util.*;
 
 public class ArrayList<E> implements List<E> {
     private E[] items;
@@ -193,15 +185,16 @@ public class ArrayList<E> implements List<E> {
             return false;
         }
 
-        boolean isRemoved = false;
+        boolean isModified = false;
 
-        for (Object item : collection) {
-            while (remove(item)) {
-                isRemoved = true;
+        for (int i = size - 1; i >= 0; i--) {
+            if (collection.contains(items[i])) {
+                remove(i);
+                isModified = true;
             }
         }
 
-        return isRemoved;
+        return isModified;
     }
 
     @Override
@@ -225,7 +218,6 @@ public class ArrayList<E> implements List<E> {
         for (int i = size - 1; i >= 0; i--) {
             if (!collection.contains(items[i])) {
                 remove(i);
-
                 isModified = true;
             }
         }
@@ -239,7 +231,7 @@ public class ArrayList<E> implements List<E> {
             return;
         }
 
-        Arrays.fill(items, null);
+        Arrays.fill(items, 0, size, null);
         size = 0;
 
         modCount++;
@@ -247,18 +239,14 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public E get(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Индекс вне диапазона. Допустимый диапазон от 0 до " + (size - 1) + ". Полученный индекс: " + index);
-        }
+        checkIndex(index);
 
         return items[index];
     }
 
     @Override
     public E set(int index, E element) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Индекс вне диапазона. Допустимый диапазон от 0 до " + (size - 1) + ". Полученный индекс: " + index);
-        }
+        checkIndex(index);
 
         E oldElement = items[index];
 
@@ -292,9 +280,7 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public E remove(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Индекс вне диапазона. Допустимый диапазон от 0 до " + (size - 1) + ". Полученный индекс: " + index);
-        }
+        checkIndex(index);
 
         E removedElement = items[index];
 
@@ -352,14 +338,10 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public String toString() {
-        if (items == null) {
-            return "[]";
-        }
-
         StringJoiner joiner = new StringJoiner(", ", "[", "]");
 
         for (int i = 0; i < size; i++) {
-            joiner.add(items[i].toString());
+            joiner.add(String.valueOf(items[i]));
         }
 
         return joiner.toString();
@@ -377,18 +359,15 @@ public class ArrayList<E> implements List<E> {
 
         ArrayList<?> arrayList = (ArrayList<?>) object;
 
-        if (size() != arrayList.size()) {
+        if (size != arrayList.size) {
             return false;
         }
 
-        Iterator<E> thisIterator = iterator();
-        Iterator<?> otherIterator = arrayList.iterator();
+        for (int i = 0; i < size; i++) {
+            E thisItem = items[i];
+            Object otherItem = arrayList.items[i];
 
-        while (thisIterator.hasNext() && otherIterator.hasNext()) {
-            E thisItem = thisIterator.next();
-            Object otherItem = otherIterator.next();
-
-            if (!(Objects.equals(thisItem, otherItem))) {
+            if (!Objects.equals(thisItem, otherItem)) {
                 return false;
             }
         }
@@ -401,8 +380,8 @@ public class ArrayList<E> implements List<E> {
         final int prime = 37;
         int hash = 1;
 
-        for (E item : this) {
-            hash = prime * hash + (item == null ? 0 : item.hashCode());
+        for (int i = 0; i < size; i++) {
+            hash = prime * hash + (items[i] == null ? 0 : items[i].hashCode());
         }
 
         return hash;
@@ -424,5 +403,11 @@ public class ArrayList<E> implements List<E> {
         int newCapacity = items.length == 0 ? 10 : items.length * 2;
 
         items = Arrays.copyOf(items, newCapacity);
+    }
+
+    private void checkIndex(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Индекс вне диапазона. Допускается от 0 до " + (size - 1) + ". Передано значение: " + index + ".");
+        }
     }
 }
