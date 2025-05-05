@@ -114,7 +114,7 @@ public class Matrix {
         int rowsCount = getRowsCount();
 
         if (index < 0 || index >= rowsCount) {
-            throw new IndexOutOfBoundsException("Индекс вне диапазона: index = " + index + "; Допустимый диапазон: от 0 до " + (rowsCount - 1) + "(включительно)");
+            throw new IndexOutOfBoundsException("Индекс вне диапазона: index = " + index + "; Допустимый диапазон: от 0 до " + (rowsCount - 1) + " (включительно)");
         }
 
         return new Vector(rows[index]);
@@ -128,7 +128,7 @@ public class Matrix {
         int rowsCount = getRowsCount();
 
         if (index < 0 || index >= rowsCount) {
-            throw new IndexOutOfBoundsException("Индекс вне диапазона: index = " + index + "; Допустимый диапазон: от 0 до " + (rowsCount - 1) + "(включительно)");
+            throw new IndexOutOfBoundsException("Индекс вне диапазона: index = " + index + "; Допустимый диапазон: от 0 до " + (rowsCount - 1) + " (включительно)");
         }
 
         int columnsCount = getColumnsCount();
@@ -145,7 +145,7 @@ public class Matrix {
         int columnsCount = getColumnsCount();
 
         if (index < 0 || index >= columnsCount) {
-            throw new IndexOutOfBoundsException("Индекс вне диапазона: index = " + index + "; Допустимый диапазон: от 0 до " + (columnsCount - 1) + "(включительно)");
+            throw new IndexOutOfBoundsException("Индекс вне диапазона: index = " + index + "; Допустимый диапазон: от 0 до " + (columnsCount - 1) + " (включительно)");
         }
 
         int rowsCount = getRowsCount();
@@ -285,9 +285,7 @@ public class Matrix {
         Vector resultVector = new Vector(rowsCount);
 
         for (int i = 0; i < rowsCount; i++) {
-            double currentComponent = Vector.getScalarProduct(rows[i], vector);
-
-            resultVector.setComponent(i, currentComponent);
+            resultVector.setComponent(i, Vector.getScalarProduct(rows[i], vector));
         }
 
         return resultVector;
@@ -298,11 +296,11 @@ public class Matrix {
             throw new NullPointerException("Прибавляемая матрица не может быть null.");
         }
 
-        checkMatrixSizeEquality(this, matrix);
+        checkMatricesSizesEquality(this, matrix);
 
-        int thisMatrixRowsCount = getRowsCount();
+        int currentMatrixRowsCount = getRowsCount();
 
-        for (int i = 0; i < thisMatrixRowsCount; i++) {
+        for (int i = 0; i < currentMatrixRowsCount; i++) {
             rows[i].add(matrix.rows[i]);
         }
     }
@@ -312,11 +310,11 @@ public class Matrix {
             throw new NullPointerException("Вычитаемая матрица не может быть null.");
         }
 
-        checkMatrixSizeEquality(this, matrix);
+        checkMatricesSizesEquality(this, matrix);
 
-        int thisMatrixRowsCount = getRowsCount();
+        int currentMatrixRowsCount = getRowsCount();
 
-        for (int i = 0; i < thisMatrixRowsCount; i++) {
+        for (int i = 0; i < currentMatrixRowsCount; i++) {
             rows[i].subtract(matrix.rows[i]);
         }
     }
@@ -330,7 +328,7 @@ public class Matrix {
             throw new NullPointerException("Матрица 2 не может быть null.");
         }
 
-        checkMatrixSizeEquality(matrix1, matrix2);
+        checkMatricesSizesEquality(matrix1, matrix2);
 
         Matrix resultMatrix = new Matrix(matrix1);
 
@@ -348,7 +346,7 @@ public class Matrix {
             throw new NullPointerException("Матрица 2 не может быть null.");
         }
 
-        checkMatrixSizeEquality(matrix1, matrix2);
+        checkMatricesSizesEquality(matrix1, matrix2);
 
         Matrix resultMatrix = new Matrix(matrix1);
 
@@ -377,10 +375,9 @@ public class Matrix {
         int matrix1RowsCount = matrix1.getRowsCount();
 
         Vector[] resultRows = new Vector[matrix1RowsCount];
+        Vector rowElements = new Vector(matrix2ColumnsCount);
 
         for (int i = 0; i < matrix1RowsCount; i++) {
-            double[] rowElements = new double[matrix2ColumnsCount];
-
             for (int j = 0; j < matrix2ColumnsCount; j++) {
                 double sum = 0;
 
@@ -388,7 +385,7 @@ public class Matrix {
                     sum += matrix1.rows[i].getComponent(k) * matrix2.rows[k].getComponent(j);
                 }
 
-                rowElements[j] = sum;
+                rowElements.setComponent(j, sum);
             }
 
             resultRows[i] = new Vector(rowElements);
@@ -397,7 +394,7 @@ public class Matrix {
         return new Matrix(resultRows);
     }
 
-    private static void checkMatrixSizeEquality(Matrix matrix1, Matrix matrix2) {
+    private static void checkMatricesSizesEquality(Matrix matrix1, Matrix matrix2) {
         int matrix1RowsCount = matrix1.getRowsCount();
         int matrix1ColumnsCount = matrix1.getColumnsCount();
         int matrix2RowsCount = matrix2.getRowsCount();
