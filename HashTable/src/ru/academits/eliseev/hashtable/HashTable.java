@@ -21,7 +21,7 @@ public class HashTable<E> implements Collection<E> {
 
     @SuppressWarnings("unchecked")
     public HashTable(int capacity) {
-        if (capacity < 0) {
+        if (capacity <= 0) {
             throw new IllegalArgumentException("Неверное значение capacity: " + capacity + ". Должно быть больше или равно 0");
         }
 
@@ -30,7 +30,7 @@ public class HashTable<E> implements Collection<E> {
 
     @SuppressWarnings("unchecked")
     public HashTable(Collection<? extends E> collection) {
-        checkNotNullCollection(collection);
+        checkCollectionIsNotNull(collection);
 
         buckets = new ArrayList[DEFAULT_CAPACITY];
 
@@ -51,11 +51,7 @@ public class HashTable<E> implements Collection<E> {
     public boolean contains(Object object) {
         int index = getIndex(object);
 
-        if (buckets[index] == null) {
-            return false;
-        }
-
-        return buckets[index].contains(object);
+        return buckets[index] != null && buckets[index].contains(object);
     }
 
     private class HashTableIterator implements Iterator<E> {
@@ -80,7 +76,7 @@ public class HashTable<E> implements Collection<E> {
                 throw new NoSuchElementException("Элемент не найден");
             }
 
-            while (currentBucketIndex < buckets.length && buckets[currentBucketIndex] == null) {
+            while (currentBucketIndex < buckets.length && (buckets[currentBucketIndex] == null || buckets[currentBucketIndex].isEmpty())) {
                 currentBucketIndex++;
                 currentElementIndex = -1;
             }
@@ -177,7 +173,11 @@ public class HashTable<E> implements Collection<E> {
 
     @Override
     public boolean containsAll(Collection<?> collection) {
-        checkNotNullCollection(collection);
+        checkCollectionIsNotNull(collection);
+
+        if (collection.isEmpty()) {
+            return true;
+        }
 
         if (isEmpty()) {
             return false;
@@ -194,7 +194,7 @@ public class HashTable<E> implements Collection<E> {
 
     @Override
     public boolean addAll(Collection<? extends E> collection) {
-        checkNotNullCollection(collection);
+        checkCollectionIsNotNull(collection);
 
         if (collection.isEmpty()) {
             return false;
@@ -209,7 +209,7 @@ public class HashTable<E> implements Collection<E> {
 
     @Override
     public boolean removeAll(Collection<?> collection) {
-        checkNotNullCollection(collection);
+        checkCollectionIsNotNull(collection);
 
         if (collection.isEmpty() || isEmpty()) {
             return false;
@@ -228,7 +228,7 @@ public class HashTable<E> implements Collection<E> {
 
     @Override
     public boolean retainAll(Collection<?> collection) {
-        checkNotNullCollection(collection);
+        checkCollectionIsNotNull(collection);
 
         if (isEmpty()) {
             return false;
@@ -240,11 +240,14 @@ public class HashTable<E> implements Collection<E> {
             if (bucket != null) {
                 int oldSize = bucket.size();
 
-                isModified = bucket.retainAll(collection);
+                isModified |= bucket.retainAll(collection);
 
-                size -= (oldSize - bucket.size());
-                modCount++;
+                size -= oldSize - bucket.size();
             }
+        }
+
+        if (isModified) {
+            modCount++;
         }
 
         return isModified;
@@ -259,14 +262,14 @@ public class HashTable<E> implements Collection<E> {
         for (ArrayList<E> bucket : buckets) {
             if (bucket != null) {
                 bucket.clear();
-                modCount++;
             }
         }
 
+        modCount++;
         size = 0;
     }
 
-    private static void checkNotNullCollection(Collection<?> collection) {
+    private static void checkCollectionIsNotNull(Collection<?> collection) {
         if (collection == null) {
             throw new NullPointerException("Коллекция не может быть null");
         }
