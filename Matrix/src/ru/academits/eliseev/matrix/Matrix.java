@@ -375,9 +375,10 @@ public class Matrix {
         int matrix1RowsCount = matrix1.getRowsCount();
 
         Vector[] resultRows = new Vector[matrix1RowsCount];
-        Vector rowElements = new Vector(matrix2ColumnsCount);
 
         for (int i = 0; i < matrix1RowsCount; i++) {
+            Vector row = new Vector(matrix2ColumnsCount);
+
             for (int j = 0; j < matrix2ColumnsCount; j++) {
                 double sum = 0;
 
@@ -385,10 +386,10 @@ public class Matrix {
                     sum += matrix1.rows[i].getComponent(k) * matrix2.rows[k].getComponent(j);
                 }
 
-                rowElements.setComponent(j, sum);
+                row.setComponent(j, sum);
             }
 
-            resultRows[i] = new Vector(rowElements);
+            resultRows[i] = row;
         }
 
         return new Matrix(resultRows);
