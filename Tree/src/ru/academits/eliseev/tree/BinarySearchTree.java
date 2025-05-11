@@ -204,6 +204,10 @@ public class BinarySearchTree<E> {
     }
 
     public void traverseDepthFirstRecursive(Consumer<E> consumer) {
+        if (consumer == null) {
+            throw new NullPointerException("Consumer не может быть null");
+        }
+
         traverseDepthFirstRecursive(root, consumer);
     }
 
@@ -219,6 +223,10 @@ public class BinarySearchTree<E> {
     }
 
     public void traverseDepthFirstIterative(Consumer<E> consumer) {
+        if (consumer == null) {
+            throw new NullPointerException("Consumer не может быть null");
+        }
+
         if (root == null) {
             return;
         }
@@ -241,6 +249,10 @@ public class BinarySearchTree<E> {
     }
 
     public void traverseBreadthFirst(Consumer<E> consumer) {
+        if (consumer == null) {
+            throw new NullPointerException("Consumer не может быть null");
+        }
+
         if (root == null) {
             return;
         }
