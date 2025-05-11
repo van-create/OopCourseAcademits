@@ -118,13 +118,16 @@ public class BinarySearchTree<E> {
     public void remove(E element) {
         Node<E> currentNode = root;
         Node<E> parentNode = null;
+
         boolean isLeftChild = false;
 
         while (currentNode != null) {
             int comparisonResult = compare(element, currentNode.getData());
+
             if (comparisonResult == 0) {
                 break;
             }
+
             parentNode = currentNode;
             isLeftChild = comparisonResult < 0;
             currentNode = comparisonResult < 0 ? currentNode.getLeft() : currentNode.getRight();
@@ -172,6 +175,7 @@ public class BinarySearchTree<E> {
 
         if (successorParent != currentNode) {
             successorParent.setLeft(successorRight);
+
             successor.setRight(currentNode.getRight());
             successor.setLeft(currentNode.getLeft());
         } else {
