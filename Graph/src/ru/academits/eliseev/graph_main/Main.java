@@ -17,17 +17,17 @@ public class Main {
 
         // Тестирование итеративного DFS
         System.out.println("Итеративный поиск в глубину:");
-        graph.depthFirstSearchIterative(vertex -> System.out.print(vertex + " "));
+        graph.traverseDepthFirstIterative(vertex -> System.out.print(vertex + " "));
         System.out.println("\n");
 
         // Тестирование рекурсивного DFS
         System.out.println("Рекурсивный поиск в глубину:");
-        graph.depthFirstSearchRecursive(vertex -> System.out.print(vertex + " "));
+        graph.traverseDepthFirstRecursive(vertex -> System.out.print(vertex + " "));
         System.out.println("\n");
 
         // Тестирование BFS
         System.out.println("Поиск в ширину:");
-        graph.breadthFirstSearch(vertex -> System.out.print(vertex + " "));
+        graph.traverseBreadthFirst(vertex -> System.out.print(vertex + " "));
         System.out.println();
     }
 }

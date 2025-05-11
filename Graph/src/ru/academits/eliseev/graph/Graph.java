@@ -39,7 +39,7 @@ public class Graph {
         }
     }
 
-    public void depthFirstSearchIterative(IntConsumer consumer) {
+    public void traverseDepthFirstIterative(IntConsumer consumer) {
         if (consumer == null) {
             throw new NullPointerException("Consumer не может быть null.");
         }
@@ -71,7 +71,7 @@ public class Graph {
         }
     }
 
-    public void depthFirstSearchRecursive(IntConsumer consumer) {
+    public void traverseDepthFirstRecursive(IntConsumer consumer) {
         if (consumer == null) {
             throw new NullPointerException("Consumer не может быть null.");
         }
@@ -84,22 +84,22 @@ public class Graph {
                 continue;
             }
 
-            depthFirstSearchRecursive(startVertex, visited, consumer);
+            traverseDepthFirstRecursive(startVertex, visited, consumer);
         }
     }
 
-    private void depthFirstSearchRecursive(int startVertex, boolean[] visited, IntConsumer consumer) {
+    private void traverseDepthFirstRecursive(int startVertex, boolean[] visited, IntConsumer consumer) {
         visited[startVertex] = true;
         consumer.accept(startVertex);
 
         for (int i = 0; i < graph.length; i++) {
             if (graph[startVertex][i] != 0 && !visited[i]) {
-                depthFirstSearchRecursive(i, visited, consumer);
+                traverseDepthFirstRecursive(i, visited, consumer);
             }
         }
     }
 
-    public void breadthFirstSearch(IntConsumer consumer) {
+    public void traverseBreadthFirst(IntConsumer consumer) {
         if (consumer == null) {
             throw new NullPointerException("Consumer не может быть null.");
         }
