@@ -22,7 +22,7 @@ public class HashTable<E> implements Collection<E> {
     @SuppressWarnings("unchecked")
     public HashTable(int capacity) {
         if (capacity <= 0) {
-            throw new IllegalArgumentException("Неверное значение capacity: " + capacity + ". Должно быть больше или равно 0");
+            throw new IllegalArgumentException("Неверное значение capacity: " + capacity + ". Должно быть больше нуля.");
         }
 
         buckets = new ArrayList[capacity];
@@ -174,14 +174,6 @@ public class HashTable<E> implements Collection<E> {
     @Override
     public boolean containsAll(Collection<?> collection) {
         checkCollectionIsNotNull(collection);
-
-        if (collection.isEmpty()) {
-            return true;
-        }
-
-        if (isEmpty()) {
-            return false;
-        }
 
         for (Object item : collection) {
             if (!contains(item)) {
