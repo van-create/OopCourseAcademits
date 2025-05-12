@@ -11,23 +11,28 @@ public class Main {
 
         // Поток корней чисел
         System.out.println("Введите количество элементов, корни которых нужно вычислить: ");
-        int numberOfElements = scanner.nextInt();
+        int elementsCount = scanner.nextInt();
 
-        DoubleStream squareRoots = IntStream.iterate(1, i -> i + 1).mapToDouble(Math::sqrt).limit(numberOfElements);
+        DoubleStream squareRootsStream = IntStream.iterate(0, i -> i + 1).mapToDouble(Math::sqrt).limit(elementsCount);
 
-        System.out.println("Квадратные корни чисел от 1 до " + numberOfElements + ":");
-        squareRoots.forEach(System.out::println);
+        System.out.println("Квадратные корни чисел от 1 до " + elementsCount + ":");
+        squareRootsStream.forEach(System.out::println);
 
         // Числа Фибоначчи
-        System.out.println("Введите количество элементов ряда Фибоначчи: ");
-        numberOfElements = scanner.nextInt();
+        System.out.println("Введите количество элементов ряда Фибоначчи:");
+        int fibonacciNumbersCount = scanner.nextInt();
 
-        Stream<Integer> fibonacciStream = Stream
-                .iterate(new int[]{0, 1}, pair -> new int[]{pair[1], pair[0] + pair[1]})
+        Stream<Integer> fibonacciNumbersStream = Stream
+                .iterate(new int[]{0, 1}, pair -> {
+                    int next = pair[0] + pair[1];
+                    pair[0] = pair[1];
+                    pair[1] = next;
+                    return pair;
+                })
                 .map(pair -> pair[0])
-                .limit(numberOfElements);
+                .limit(fibonacciNumbersCount);
 
         System.out.println("Числа Фибоначчи:");
-        fibonacciStream.forEach(System.out::println);
+        fibonacciNumbersStream.forEach(System.out::println);
     }
 }
