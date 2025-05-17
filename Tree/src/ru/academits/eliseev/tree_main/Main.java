@@ -34,8 +34,8 @@ public class Main {
         System.out.println();
 
         // Поиск
-        System.out.println("Поиск 40: " + intTree.search(40)); // Ожидается: true
-        System.out.println("Поиск 100: " + intTree.search(100)); // Ожидается: false
+        System.out.println("Поиск 40: " + intTree.contains(40)); // Ожидается: true
+        System.out.println("Поиск 100: " + intTree.contains(100)); // Ожидается: false
 
         // Удаление узла с двумя детьми (50)
         intTree.remove(50);
@@ -66,9 +66,18 @@ public class Main {
         System.out.println("Тест 2: Дерево с String (с компаратором, поддержка null)");
 
         Comparator<String> stringComparator = (s1, s2) -> {
-            if (s1 == null && s2 == null) return 0;
-            if (s1 == null) return -1;
-            if (s2 == null) return 1;
+            if (s1 == null && s2 == null) {
+                return 0;
+            }
+
+            if (s1 == null) {
+                return -1;
+            }
+
+            if (s2 == null) {
+                return 1;
+            }
+
             return s1.compareTo(s2);
         };
 
@@ -84,28 +93,28 @@ public class Main {
         System.out.println("Размер дерева: " + stringTree.size()); // Ожидается: 5
 
         System.out.print("Рекурсивный preorder обход: ");
-        stringTree.traverseDepthFirstRecursive(x -> System.out.print((x) + " ")); // Ожидается: banana apple null grape orange
+        stringTree.traverseDepthFirstRecursive(x -> System.out.print(x + " ")); // Ожидается: banana apple null grape orange
         System.out.println();
 
         System.out.print("Итеративный preorder обход: ");
-        stringTree.traverseDepthFirstIterative(x -> System.out.print((x) + " ")); // Ожидается: banana apple null grape orange
+        stringTree.traverseDepthFirstIterative(x -> System.out.print(x + " ")); // Ожидается: banana apple null grape orange
         System.out.println();
 
         System.out.print("BFS обход: ");
-        stringTree.traverseBreadthFirst(x -> System.out.print((x) + " ")); // Ожидается: banana apple orange null grape
+        stringTree.traverseBreadthFirst(x -> System.out.print(x + " ")); // Ожидается: banana apple orange null grape
         System.out.println();
 
         // Поиск
-        System.out.println("Поиск 'apple': " + stringTree.search("apple")); // Ожидается: true
-        System.out.println("Поиск null: " + stringTree.search(null)); // Ожидается: true
-        System.out.println("Поиск 'pear': " + stringTree.search("pear")); // Ожидается: false
+        System.out.println("Поиск 'apple': " + stringTree.contains("apple")); // Ожидается: true
+        System.out.println("Поиск null: " + stringTree.contains(null)); // Ожидается: true
+        System.out.println("Поиск 'pear': " + stringTree.contains("pear")); // Ожидается: false
 
         // Удаление узла с двумя детьми (banana)
         stringTree.remove("banana");
         System.out.println("Размер после удаления 'banana': " + stringTree.size()); // Ожидается: 4
 
         System.out.print("Итеративный preorder после удаления 'banana': ");
-        stringTree.traverseDepthFirstIterative(x -> System.out.print((x) + " ")); // Ожидается: grape apple null orange
+        stringTree.traverseDepthFirstIterative(x -> System.out.print(x + " ")); // Ожидается: grape apple null orange
         System.out.println();
 
         // Удаление null
@@ -113,7 +122,7 @@ public class Main {
         System.out.println("Размер после удаления null: " + stringTree.size()); // Ожидается: 3
 
         System.out.print("BFS после удаления null: ");
-        stringTree.traverseBreadthFirst(x -> System.out.print((x) + " ")); // Ожидается: grape apple orange
+        stringTree.traverseBreadthFirst(x -> System.out.print(x + " ")); // Ожидается: grape apple orange
         System.out.println();
 
         // Тест 3: Дерево с не-Comparable типом
@@ -129,7 +138,8 @@ public class Main {
         }
 
         // Тест 4: toString
-        System.out.println("\nТест 4: toString");
+        System.out.println();
+        System.out.println("Тест 4: toString");
         System.out.println(intTree);
         System.out.println(stringTree);
     }
