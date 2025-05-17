@@ -103,11 +103,6 @@ public class View implements TemperatureConverterView {
     }
 
     @Override
-    public JFrame getFrame() {
-        return frame;
-    }
-
-    @Override
     public JButton getConvertButton() {
         return convertButton;
     }
