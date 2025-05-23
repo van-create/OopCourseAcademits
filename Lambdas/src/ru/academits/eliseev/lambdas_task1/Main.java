@@ -30,22 +30,22 @@ public class Main {
                 .filter(person -> person.age() < 18)
                 .toList();
 
-        OptionalDouble averageAge = personsUnder18.stream()
+        OptionalDouble personsUnder18AverageAge = personsUnder18.stream()
                 .mapToInt(Person::age)
                 .average();
 
-        averageAge.ifPresentOrElse(
+        personsUnder18AverageAge.ifPresentOrElse(
                 value -> System.out.println("Средний возраст людей младше 18 лет: " + value),
                 () -> System.out.println("Нет людей младше 18 лет")
         );
 
         // Г
-        Map<String, Double> averageAgeByNames = persons.stream()
+        Map<String, Double> averageAgesByNames = persons.stream()
                 .collect(Collectors.groupingBy(
                         Person::name,
                         Collectors.averagingInt(Person::age)
                 ));
-        System.out.println("Map, в котором ключ - имя человека, значение - средний возраст людей с этим именем: " + averageAgeByNames);
+        System.out.println("Map, в котором ключ - имя человека, значение - средний возраст людей с этим именем: " + averageAgesByNames);
 
         // Д
         System.out.println("Люди, возраст которых от 20 до 45 лет, в порядке убывания возраста: " +
